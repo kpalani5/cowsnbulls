@@ -1,3 +1,20 @@
+<?php
+	include("config.php");
+	if($_SERVER["REQUEST_METHOD"] == "POST")
+	{
+		$username = $_POST["username"];
+		$password = $_POST["password"];
+		$sth = $db->prepare('SELECT password FROM login WHERE username = :username');
+		$sth->bindParam(':username',$username);
+		$sth->execute();
+		$user = $sth->fetch(PDO::FETCH_OBJ);
+		if(hash_equals($user->password,crypt($password,$user->password)))
+		{
+			//Login - Redirect to home.php
+		}
+	}
+?>
+
 <html>
 	<head>
 		<title>Cows N Bulls</title>
@@ -8,7 +25,7 @@
 			<?php echo("COWS AND BULLS"); ?>
 		</h1>
 		</br></br>
-		<form action = "home.php" method = "post">
+		<form action = "login.php" method = "post">
 		<table>
 			<tr> 
 				<td> Username </td> 
