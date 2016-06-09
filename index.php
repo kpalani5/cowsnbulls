@@ -25,7 +25,7 @@
 			<?php echo("COWS AND BULLS"); ?>
 		</h1>
 		</br></br>
-		<form action = "login.php" method = "post">
+		<form action = "" method = "post">
 		<table>
 			<tr> 
 				<td> Username </td> 

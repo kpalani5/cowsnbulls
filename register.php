@@ -1,7 +1,19 @@
+<?php
+    if($_SERVER["REQUEST_METHOD"] == "POST")
+	{
+		$username = $_POST["username"];
+		$password = $_POST["password"];
+		$cost = 10;
+		$salt = strtr(base64_encode(mcrypt_create_iv(16,MCRYPT_DEV_URANDOM)),'+','.');
+		$salt = sprintf("$2a$%02d$",$cost).$salt;
+		$hash = crypt($password,$salt);			
+	}
+?>
 <html>
 	<body>
 		<center>
-		<form action = "success.php" method = "post">
+		<center> <h1> Registration </h1> </center>
+		<form action = "" method = "post">
 			<table>
 				<tr>
 					<td> Username: </td>
