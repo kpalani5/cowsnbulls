@@ -10,7 +10,7 @@
 		$user = $sth->fetch(PDO::FETCH_OBJ);
 		if(hash_equals($user->password,crypt($password,$user->password)))
 		{
-			//Login - Redirect to home.php
+			header("home.php");
 		}
 	}
 ?>
@@ -25,7 +25,7 @@
 			<?php echo("COWS AND BULLS"); ?>
 		</h1>
 		</br></br>
-		<form action = "" method = "post">
+		<form action = "index.php" method = "post">
 		<table>
 			<tr> 
 				<td> Username </td> 
