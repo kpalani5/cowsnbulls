@@ -4,11 +4,9 @@
 	{
 		$username = $_POST["username"];
 		$password = $_POST["password"];
-		$sth = $db->prepare('SELECT password FROM login WHERE username = :username');
-		$sth->bindParam(':username',$username);
-		$sth->execute();
-		$user = $sth->fetch(PDO::FETCH_OBJ);
-		if(hash_equals($user->password,crypt($password,$user->password)))
+		$sql = "SELECT Password FROM login WHERE Username = '$username';";
+		$pass = mysqli_query($db,$sql) or die (mysqli_error($db));
+		if(hash_equals($pass,crypt($password,$pass)))
 		{
 			header("home.php");
 		}

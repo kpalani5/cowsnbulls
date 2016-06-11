@@ -6,8 +6,7 @@
 		$password = $_POST["password"];
 		$email = $_POST["email"];
 		$cost = 10;
-		#$salt = strtr(base64_encode(mcrypt_create_iv(16,MCRYPT_DEV_URANDOM)),'+','.');
-		$salt = "abc";
+		$salt = strtr(base64_encode(mcrypt_create_iv(16,MCRYPT_DEV_URANDOM)),'+','.');
 		$salt = sprintf("$2a$%02d$",$cost).$salt;
 		$hash = crypt($password,$salt);
 		$sql = "INSERT INTO login VALUES ('$username','$hash','user');";
