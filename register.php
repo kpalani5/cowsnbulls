@@ -5,6 +5,11 @@
 		$username = $_POST["username"];
 		$password = $_POST["password"];
 		$email = $_POST["email"];
+		$confirm = $_POST["confirm"];
+		//Check if username is available - PHP Ajax JQuery
+		//Check email format - HTML5, availability - PHP Ajax JQuery
+		//Check if password is confirmed - PHP for server side and JS for client side
+		//Check password strength - PHP and JQuery
 		$cost = 10;
 		$salt = strtr(base64_encode(mcrypt_create_iv(16,MCRYPT_DEV_URANDOM)),'+','.');
 		$salt = sprintf("$2a$%02d$",$cost).$salt;
