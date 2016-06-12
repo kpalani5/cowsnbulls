@@ -4,11 +4,13 @@
 	{
 		$username = $_POST["username"];
 		$password = $_POST["password"];
-		$sql = "SELECT Password FROM login WHERE Username = '$username';";
-		$pass = mysqli_query($db,$sql) or die (mysqli_error($db));
+		$sql = "SELECT * FROM login WHERE Username = '$username';";
+		$result = mysqli_query($db,$sql);
+		$row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+		$pass = $row["Password"];
 		if(hash_equals($pass,crypt($password,$pass)))
 		{
-			header("home.php");
+			header('Location: home.php');
 		}
 	}
 ?>
