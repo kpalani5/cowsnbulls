@@ -8,7 +8,7 @@
 		$confirm = $_POST["confirm"];
 		$user_count = 0;
 		$email_count = 0;
-		//Check if username is available - PHP 
+		
 		if (isset($_POST['username']))
 		{
 			$sql = "SELECT count(*) FROM user WHERE username='$username';";
@@ -18,28 +18,10 @@
 			$result2 = mysqli_query($db,$sql2);
 			$row2 = mysqli_fetch_array($result2,MYSQLI_ASSOC);
 			$user_count = $row["count(*)"];
-			$email_count = $row2["count(*)"];
-			if($user_count > 0) 
-			{
-				echo "<div> Username Not Available.</div>";
-			}
-			else if($email_count > 0)
-			{
-				echo "<div> User with this email is already registered. </div>";
-			}
+			$email_count = $row2["count(*)"];	
 		}
 		
-		//Check email format - HTML5
-		
-		//Check if password is confirmed - PHP for server side and JS for client side
-		if($_POST['password'] !== $_POST['confirm'])
-		{
-			echo "<div> Passwords do not match.</div>";
-		}
-		
-		//Check password strength - PHP and JQuery
-		
-		else if($user_count == 0 && $email_count == 0)
+		if($user_count == 0 && $email_count == 0 && $password === $confirm)
 		{
 			$cost = 10;
 			$salt = strtr(base64_encode(mcrypt_create_iv(16,MCRYPT_DEV_URANDOM)),'+','.');
@@ -49,33 +31,39 @@
 			$sql2 = "INSERT INTO user VALUES ('$username','$email',now());";
 			mysqli_query($db,$sql2);
 			mysqli_query($db,$sql);		 
-			echo "<div> Successfully Registered!</div>";
 		}
 	}
 ?>
 <html>
-	<script>
-		function validate()
-		{
-			if(document.getElementById("password").value != document.getElementById("confirm").value)
-			{
-				document.getElementById('error').innerHTML = "Passwords do not match."
-				return false;
-			}
-		}
-		
-	</script>
 	<body>
 		<center>
 		<center> <h1> Registration </h1> </center>
 		<form action = "register.php" method = "post">
 			<table>
-			    <tr>
-					<td> <div id = "error"> </div> </td>
-				</tr>
+			    <?php 
+				if($_SERVER["REQUEST_METHOD"] == "POST")
+				{
+					if($user_count > 0) 
+					{
+						echo "<div> Username Not Available.</div>";
+					}
+					if($email_count > 0)
+					{
+						echo "<div> User with this email is already registered. </div>";
+					}
+					if($password !== $confirm)
+					{
+						echo "<div> Passwords do not match.</div>";
+					}
+					if($user_count == 0 && $email_count == 0 && $password === $confirm)
+					{
+						echo "<div> Successfully Registered!</div>";
+					}
+				}
+				?>
 				<tr>
 					<td> Username: </td>
-					<td> <input type = "text" name = "username"> </td>
+					<td> <input type = "text" name = "username" required> </td>
 					<td> <div id = "user_status"> </div> </td>
 				</tr>
 				<tr>
@@ -84,11 +72,11 @@
 				</tr>
 				<tr>
 					<td> Password: </td>
-					<td> <input type = "password" name = "password" id = "password"> </td>
+					<td> <input type = "password" name = "password" id = "password" required> </td>
 				</tr>
 				<tr>
 					<td> Confirm Password: </td>
-					<td> <input type = "password" name = "confirm" id = "confirm" onblur = "validate();"> </td>
+					<td> <input type = "password" name = "confirm" id = "confirm" required> </td>
 				</tr>
 			</table>
 			<input type = "submit" value = "Register">
