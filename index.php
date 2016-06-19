@@ -1,5 +1,6 @@
 <?php
 	include("config.php");
+	session_start();
 	if($_SERVER["REQUEST_METHOD"] == "POST")
 	{
 		$username = $_POST["username"];
@@ -10,6 +11,7 @@
 		$pass = $row["Password"];
 		if(hash_equals($pass,crypt($password,$pass)))
 		{
+			$_SESSION["login_user"] = $username;
 			header('Location: home.php');
 		}
 	}
