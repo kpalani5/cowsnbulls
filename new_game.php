@@ -7,7 +7,7 @@
 		<center> <h2> Game Selection </h2> </center>
 		<br>
 		<center>
-		<form action = "game.php" method = "post">
+		<form action = "pre_game.php" method = "post">
 			<table>
 				<tr> 
 				<td> LEVEL: </td>
