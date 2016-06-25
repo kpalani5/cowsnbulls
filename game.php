@@ -15,27 +15,26 @@
 
 <html>
 	<script src="https://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
-	<body>
+	<head>
 	<script type = "text/javascript">
-		function cowsNbulls()
-		{
-			jQuery.ajax(
+		function cowsNbulls() {	
+			$.ajax(
 			{
 				url: "cnb.php",
-				data: "game_id="+$(#game_id).val()+"&turncount="+$(#turncount).val()+"&guess="+$(#guess).val(),
+				data: "game_id="+$("#game_id").val()+"&turncount="+$("#turncount").val()+"&guess="+$("#guess").val(),
 				type: "POST",
 				success:function(data){
 					if(data >= 0)
-					{
+					{						
 						var quo = Math.floor(data/10);
 						var rem = data % 10;
-						$(#bull).html(quo);
-						$(#cow).html(rem);
+						$("#bull").html(quo);
+						$("#cow").html(rem);
 					}
 					else
 					{
-						$(#bull).html("X");
-						$(#cow).html("X");
+						$("#bull").html("X");
+						$("#cow").html("X");
 					}
 				},
 				error:function (){}
@@ -43,7 +42,9 @@
 			);
 		}
 	</script>
-		<form action = "#" onSubmit = "cowsNbulls();" method = "post">
+	</head>
+	<body>
+		<form action = "javascript:cowsNbulls();" method = "post" id = "f1">
 			<input type = "hidden" name = "game_id" id = "game_id" value = "<?php echo $game_id ?>" >
 			<input type = "hidden" name = "turncount" id = "turncount" value = "<?php echo $turncount ?>" >
 			<table>

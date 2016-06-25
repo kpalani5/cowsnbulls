@@ -4,16 +4,15 @@
 	if($_SERVER["REQUEST_METHOD"] == "POST")
 	{
 		$guess = strtoupper($_POST["guess"]);
-		$game_word = $_POST["game_word"];
 		$game_id = $_POST["game_id"];
 		$turncount = $_POST["turncount"];
-		$letter = strlen($game_word);
 		$cows = 0;
 		$bulls = 0;
 		$sql = "SELECT Word FROM Game WHERE GameID = '$game_id';";
 		$result = mysqli_query($db,$sql);
 		$row = mysqli_fetch_array($result,MYSQLI_ASSOC);
 		$game_word = $row["Word"];
+		$letter = strlen($game_word);
 		$sql = "SELECT count(*) FROM Wordlist WHERE Word = '$guess';";
 		$result = mysqli_query($db,$sql);
 		$row = mysqli_fetch_array($result,MYSQLI_ASSOC);
@@ -27,16 +26,13 @@
 			{
 				$char = substr($game_word,$i,1);
 				$pos = strpos($guess,$char);
-				if($pos)
+				if($pos === $i)
 				{
-					if($pos == $i)
-					{
-						$bulls++;
-					}
-					else
-					{
+					$bulls++;
+				}
+				else if($pos !== FALSE)
+				{
 						$cows++;
-					}
 				}
 			}
 		}
@@ -48,6 +44,6 @@
 		$sql = "INSERT INTO Turn(GameID,TurnCount,Guess,Cows,Bulls,Validity) VALUES ('$game_id','$turncount','$guess','$cows','$bulls','$validity');";	
 		mysqli_query($db,$sql) or die(mysqli_error($db));
 		$val = ($bulls * 10) + $cows;
-		echo "$val";
+		echo("$val");
 	}	
 ?>
