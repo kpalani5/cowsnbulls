@@ -40,13 +40,17 @@
 				error:function (){}
 			}
 			);
+			$("#turncount").get(0).value++; 
+			//Make previous text box uneditable and button unclickable
+			//Create new text, button and labels with unique id names
+			
 		}
 	</script>
 	</head>
 	<body>
-		<form action = "javascript:cowsNbulls();" method = "post" id = "f1">
+		<form action = "javascript:cowsNbulls();" method = "post">
 			<input type = "hidden" name = "game_id" id = "game_id" value = "<?php echo $game_id ?>" >
-			<input type = "hidden" name = "turncount" id = "turncount" value = "<?php echo $turncount ?>" >
+			<input type = "hidden" name = "turncount" id = "turncount" value = "0" >
 			<table>
 				<tr> 	
 				<td> <input type = "text" name = "guess" id = "guess"> </td>
