@@ -34,6 +34,9 @@
 ?>
 
 <html>
+	<head>
+		<title>Cows N Bulls</title>
+	</head>
 	<body>
 		<center> <h2> Get Ready to Start the Game </h2> </center>
 		<br>

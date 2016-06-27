@@ -35,6 +35,9 @@
 	}
 ?>
 <html>
+	<head>
+		<title>Cows N Bulls</title>
+	</head>
 	<body>
 		<center>
 		<center> <h1> Registration </h1> </center>

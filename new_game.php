@@ -3,6 +3,9 @@
 ?>
 
 <html>
+	<head>
+		<title>Cows N Bulls</title>
+	</head>
 	<body>
 		<center> <h2> Game Selection </h2> </center>
 		<br>

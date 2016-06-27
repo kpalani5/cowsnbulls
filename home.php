@@ -2,6 +2,9 @@
 	include("session.php");
 ?>
 <html>
+	<head>
+		<title>Cows N Bulls</title>
+	</head>
 	<body>
 		<center> <h2> Welcome <?php echo $login_session; ?> </h2> </center>
 		<br>
