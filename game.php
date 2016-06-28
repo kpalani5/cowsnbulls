@@ -23,18 +23,16 @@
 				data: "game_id="+$("#game_id").val()+"&turncount="+$("#turncount").val()+"&guess="+$("#guess").val(),
 				type: "POST",
 				success:function(data){
+					var quo = "X";
+					var rem = "X";
 					if(data >= 0)
 					{						
 						var quo = Math.floor(data/10);
 						var rem = data % 10;
-						$("#bull").html(quo);
-						$("#cow").html(rem);
 					}
-					else
-					{
-						$("#bull").html("X");
-						$("#cow").html("X");
-					}
+					var guessval = $("#guess").val();
+					$("#game_table").append("<tr> <td>" + guessval + "</td> <td>" + rem + "</td> <td>" + quo + "</td> </tr>");
+					$("#guess").val('');
 				},
 				error:function (){}
 			}
@@ -48,22 +46,26 @@
 	</head>
 	<body>
 		<center> <h1> COWS AND BULLS </h1> </center>
-		<form action = "javascript:cowsNbulls();" method = "post">
+		<form method = "post">
 			<input type = "hidden" name = "game_id" id = "game_id" value = "<?php echo $game_id ?>" >
-			<input type = "hidden" name = "turncount" id = "turncount" value = "0" >
+			<input type = "hidden" name = "turncount" id = "turncount" value = "1" >
 			<center>
-			<table border = "2">
-				<th> GUESS </th>
-				<th> COWS </th>
-				<th> BULLS </th>
+			<table>
 				<tr> 	
-				<td> <input type = "text" name = "guess" id = "guess" autocomplete = "off"> </td>
-				<td> <p id = "cow"> </p> </td>
-				<td> <p id = "bull"> </p> </td>
-				<td> <input type = "submit" value = "GUESS"> </td>
+				<td> <input type = "text" name = "guess" id = "guess" autocomplete = "off" required> </td>
+				<td> <input type = "button" value = "GUESS" onClick = "cowsNbulls();"> </td>
 				</tr>
 			</table>
 			</center>
 		</form>
+		<center>
+			<table border = "2" id = "game_table">
+				<th> GUESS </th>
+				<th> COWS </th>
+				<th> BULLS </th>
+				<tr> 	
+				</tr>
+			</table>
+		</center>
 	</body>
 </html>

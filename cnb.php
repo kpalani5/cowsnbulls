@@ -44,6 +44,11 @@
 		$sql = "INSERT INTO Turn(GameID,TurnCount,Guess,Cows,Bulls,Validity) VALUES ('$game_id','$turncount','$guess','$cows','$bulls','$validity');";	
 		mysqli_query($db,$sql) or die(mysqli_error($db));
 		$val = ($bulls * 10) + $cows;
+		if($val == 40)
+		{
+			$sql = "UPDATE Game SET Status = 'Success' WHERE GameID = '$game_id';";
+			mysqli_query($db,$sql);
+		}
 		echo("$val");
 	}	
 ?>
