@@ -25,22 +25,29 @@
 				success:function(data){
 					var quo = "X";
 					var rem = "X";
+					alert(data);
 					if(data >= 0)
 					{						
 						var quo = Math.floor(data/10);
 						var rem = data % 10;
 					}
+					if(quo > 10)
+					{
+						quo = quo % 10;
+					}
 					var guessval = $("#guess").val();
 					$("#game_table").append("<tr> <td>" + guessval + "</td> <td>" + rem + "</td> <td>" + quo + "</td> </tr>");
 					$("#guess").val('');
+					if(data >= 100 || data < -100)
+					{
+						$("#guess").prop("readonly",true);
+						$("#gbutton").prop("disabled",true);
+					}
 				},
 				error:function (){}
 			}
 			);
 			$("#turncount").get(0).value++; 
-			//Make previous text box uneditable and button unclickable
-			//Create new text, button and labels with unique id names
-			
 		}
 	</script>
 	</head>
@@ -53,7 +60,7 @@
 			<table>
 				<tr> 	
 				<td> <input type = "text" name = "guess" id = "guess" autocomplete = "off" required> </td>
-				<td> <input type = "button" value = "GUESS" onClick = "cowsNbulls();"> </td>
+				<td> <input type = "button" value = "GUESS" id = "gbutton" onClick = "cowsNbulls();"> </td>
 				</tr>
 			</table>
 			</center>
