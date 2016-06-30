@@ -4,9 +4,23 @@
 	if($_SERVER["REQUEST_METHOD"] == "POST")
 	{
 		$game_id = $_POST["game_id"];
-		$sql = "UPDATE Game SET Status = 'Open' WHERE GameID = '$game_id';";
-		mysqli_query($db,$sql);
-		$turncount = 1;
+		$sql = "SELECT Status FROM Game WHERE GameID = '$game_id';";
+		$result = mysqli_query($db,$sql);
+		$row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+		$status = $row["Status"];
+		if($status == "New")
+		{
+			$sql = "UPDATE Game SET Status = 'Open' WHERE GameID = '$game_id';";
+			mysqli_query($db,$sql);
+			$turncount = 1;
+		}
+		else if($status == "Open")
+		{
+			$sql = "SELECT count(*) FROM Turn WHERE GameID = '$game_id';";
+			$result = mysqli_query($db,$sql);
+			$row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+			$turncount = $row["count(*)"] + 1;
+		}
 	}
 
 ?>
@@ -25,7 +39,6 @@
 				success:function(data){
 					var quo = "X";
 					var rem = "X";
-					alert(data);
 					if(data >= 0)
 					{						
 						var quo = Math.floor(data/10);
@@ -55,7 +68,7 @@
 		<center> <h1> COWS AND BULLS </h1> </center>
 		<form method = "post">
 			<input type = "hidden" name = "game_id" id = "game_id" value = "<?php echo $game_id ?>" >
-			<input type = "hidden" name = "turncount" id = "turncount" value = "1" >
+			<input type = "hidden" name = "turncount" id = "turncount" value = "<?php echo $turncount ?>" >
 			<center>
 			<table>
 				<tr> 	
