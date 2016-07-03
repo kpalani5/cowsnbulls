@@ -23,6 +23,8 @@
 			$turncount = $row["count(*)"] + 1;
 		}
 		$save_status_disable = "enabled";
+		$guess_status_disable = "enabled";
+		$guess_status_readonly = "";
 		if($mode == "Timer" || $mode == "Sequence")
 		{
 			$save_status_disable = "disabled";
@@ -99,23 +101,26 @@
 				<?php
 					if($status != "New")
 					{
-						$sql = "SELECT Guess,Cows,Bulls FROM Turn WHERE GameID = '$game_id'; ORDER BY TurnCount";
+						$sql = "SELECT Guess,Cows,Bulls FROM Turn WHERE GameID = '$game_id' ORDER BY TurnCount;";
 						$result = mysqli_query($db,$sql);
-						while($row = mysqli_fetch_array($result,MYSQLI_ASSOC))
+						if($result)
 						{
-							echo "<tr>";
-							echo "<td>" . $row["Guess"] . "</td>";
-							if($row["Cows"] < 0)
+							while($row = mysqli_fetch_array($result,MYSQLI_ASSOC))
 							{
-								echo "<td> X <\td>";
-								echo "<td> X <\td>";
+								echo "<tr>";
+								echo "<td>" . $row["Guess"] . "</td>";
+								if($row["Cows"] < 0)
+								{
+									echo "<td> X <\td>";
+									echo "<td> X <\td>";
+								}
+								else
+								{
+									echo "<td>" . $row["Cows"] . "</td>";
+									echo "<td>" . $row["Bulls"] . "</td>";
+								}
+								echo "</tr>";
 							}
-							else
-							{
-								echo "<td>" . $row["Cows"] . "</td>";
-								echo "<td>" . $row["Bulls"] . "</td>";
-							}
-							echo "</tr>";
 						}
 					}
 				?>
