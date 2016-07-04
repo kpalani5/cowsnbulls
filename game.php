@@ -4,11 +4,13 @@
 	if($_SERVER["REQUEST_METHOD"] == "POST")
 	{
 		$game_id = $_POST["game_id"];
-		$sql = "SELECT Status,Mode FROM Game WHERE GameID = '$game_id';";
+		$sql = "SELECT Status,Mode,Word FROM Game WHERE GameID = '$game_id';";
 		$result = mysqli_query($db,$sql);
 		$row = mysqli_fetch_array($result,MYSQLI_ASSOC);
 		$status = $row["Status"];
-		$mode = $row["Mode"];
+		$mode = $row["Mode"];		
+		$gword = $row["Word"];
+		
 		if($status == "New")
 		{
 			$sql = "UPDATE Game SET Status = 'Open' WHERE GameID = '$game_id';";
@@ -28,6 +30,28 @@
 		if($mode == "Timer" || $mode == "Sequence")
 		{
 			$save_status_disable = "disabled";
+		}
+		$seq_id = "";
+		$level = "";
+		$letter = "Four";
+		if($mode == "Sequence")
+		{
+			$sql = "SELECT Difficulty,Letters FROM Wordlist WHERE Word = '$gword';";
+			$result = mysqli_query($db,$sql);
+			$row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+			$level = $row["Difficulty"];
+			if($row["Letters"] == 5)
+			{
+				$letter = "Five";
+			}
+		
+			$sql = "SELECT SequenceID FROM Sequence WHERE GameID = '$game_id';";
+			$result = mysqli_query($db,$sql);
+			$row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+			$seq_id = $row["SequenceID"];
+			
+			$sql = "UPDATE Sequence SET GameStatus = 'Complete' WHERE GameID = '$game_id';";
+			mysqli_query($db,$sql);
 		}
 		if($status == "Success" || $status == "Failure")
 		{
@@ -63,13 +87,20 @@
 						quo = quo % 10;
 					}
 					var guessval = $("#guess").val();
-					$("#game_table").append("<tr> <td>" + guessval + "</td> <td>" + rem + "</td> <td>" + quo + "</td> </tr>");
+					var turnc = $('#turncount').get(0).value - 1;
+					$("#game_table").append("<tr> <td>" + turnc + "</td> <td>" + guessval + "</td> <td>" + rem + "</td> <td>" + quo + "</td> </tr>");
 					$("#guess").val('');
 					if(data >= 100 || data < -100)
 					{
 						$("#guess").prop("readonly",true);
 						$("#gbutton").prop("disabled",true);
 						$("#sbutton").prop("disabled",true);
+					}
+					var mode = $("#mode").val();
+					if(mode == "Sequence" && data >= 100)
+					{
+							$("#ssbutton").prop("disabled",false);
+							$("#scbutton").prop("disabled",false);
 					}
 				},
 				error:function (){}
@@ -84,9 +115,10 @@
 		<form method = "post">
 			<input type = "hidden" name = "game_id" id = "game_id" value = "<?php echo $game_id ?>" <?php echo $guess_status_readonly; ?>>
 			<input type = "hidden" name = "turncount" id = "turncount" value = "<?php echo $turncount ?>" >
+			<input type = "hidden" name = "mode" id = "mode" value = "<?php echo $mode ?>" >
 			<center>
 			<table>
-				<tr> 	
+				<tr>
 				<td> <input type = "text" name = "guess" id = "guess" autocomplete = "off" required> </td>
 				<td> <input type = "button" value = "GUESS" id = "gbutton" onClick = "cowsNbulls();" <?php echo $guess_status_disable;?>> </td>
 				</tr>
@@ -95,19 +127,21 @@
 		</form>
 		<center>
 			<table border = "2" id = "game_table">
+				<th> TURN </th>
 				<th> GUESS </th>
 				<th> COWS </th>
 				<th> BULLS </th>
 				<?php
 					if($status != "New")
 					{
-						$sql = "SELECT Guess,Cows,Bulls FROM Turn WHERE GameID = '$game_id' ORDER BY TurnCount;";
+						$sql = "SELECT Guess,Cows,Bulls,TurnCount FROM Turn WHERE GameID = '$game_id' ORDER BY TurnCount;";
 						$result = mysqli_query($db,$sql);
 						if($result)
 						{
 							while($row = mysqli_fetch_array($result,MYSQLI_ASSOC))
 							{
 								echo "<tr>";
+								echo "<td>" . $row["TurnCount"] . "</td>";
 								echo "<td>" . $row["Guess"] . "</td>";
 								if($row["Cows"] < 0)
 								{
@@ -132,6 +166,17 @@
 		<center>
 		<form action = "save_game.php" method = "post">
 			<input type = "submit" value = "SAVE GAME" id = "sbutton" <?php echo $save_status_disable; ?>> 
+		</form>
+		<form action = "save_game.php" method = "post">
+			<input type = "hidden" name = "game_id" value = <?php echo $game_id ?>>
+			<input type = "submit" value = "SAVE SEQUENCE" id = "ssbutton" disabled> 
+		</form>
+		<form action = "pre_game.php" method = "post">
+			<input type = "hidden" name = "mode" id = "mode" value = "<?php echo $mode ?>" >
+			<input type = "hidden" name = "letter" id = "letter" value = "<?php echo $letter ?>" >
+			<input type = "hidden" name = "level" id = "level" value = "<?php echo $level ?>" >
+			<input type = "hidden" name = "seq_id" value = <?php echo $seq_id ?>>
+			<input type = "submit" value = "CONTINUE SEQUENCE" id = "scbutton" disabled> 
 		</form>
 		</center>
 	</body>

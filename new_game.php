@@ -47,6 +47,7 @@
 				</tr>
 			</table>
 			<br>
+			<input type = "hidden" value = "" name = "seq_id">
 			<input type = "submit" value = "PLAY">
 		</form>
 		</center>

@@ -33,7 +33,7 @@
 				}
 				else if($pos !== FALSE)
 				{
-						$cows++;
+					$cows++;
 				}
 			}
 		}

@@ -30,6 +30,41 @@
 		$result = mysqli_query($db,$sql);
 		$row = mysqli_fetch_array($result,MYSQLI_ASSOC);
 		$game_id = $row["GameID"];
+		
+		$start_val = "START GAME";
+		$cancel_val = "CANCEL GAME";
+		$prev_game = "";
+		if($mode == "Sequence")
+		{
+			$seq_id = $_POST["seq_id"];
+			if($seq_id == "")
+			{
+				$sql = "INSERT INTO Sequence(GameID,GameCount,GameStatus) VALUES ('$game_id','1','New');";
+				mysqli_query($db,$sql);
+				$start_val = "START SEQUENCE";
+			}
+			else
+			{
+				$sql = "SELECT count(*) FROM Sequence WHERE SequenceID = '$seq_id';";
+				$result = mysqli_query($db,$sql);
+				$row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+				$seq_count = $row["count(*)"];
+				
+				$sql = "SELECT GameID FROM Sequence WHERE SequenceID = '$seq_id' AND GameStatus = 'Complete';";
+				$result = mysqli_query($db,$sql);
+				$row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+				$prev_game = $row["GameID"];
+				
+				$sql = "UPDATE Sequence SET GameStatus = 'Intermediate' WHERE GameID = '$prev_game';";
+				mysqli_query($db,$sql);
+				
+				$seq_count++;
+				$sql = "INSERT INTO Sequence(SequenceID,GameID,GameCount,GameStatus) VALUES ('$seq_id','$game_id','$seq_count','New');";
+				mysqli_query($db,$sql);
+				$start_val = "CONTINUE SEQUENCE";
+				$cancel_val = "SAVE AND CONTINUE LATER";
+			}
+		}
 	}	
 ?>
 
@@ -43,12 +78,13 @@
 		<form action = "game.php" method = "post">
 			<input type = "hidden" name = "mode" value = "<?php echo $mode ?>" >
 			<input type = "hidden" name = "game_id" value = "<?php echo $game_id ?>" >
-			<center> <input type = "submit" value = "START GAME"> </center>
+			<center> <input type = "submit" value = "<?php echo $start_val; ?>" > </center>
 		</form>
 		<br>
 		<form action = "cancel_game.php" method = "post">
 			<input type = "hidden" name = "game_id" value = "<?php echo $game_id ?>" >
-			<center> <input type = "submit" value = "CANCEL GAME"> </center>
+			<input type = "hidden" name = "prev_game" value = "<?php echo $prev_game ?>" >
+			<center> <input type = "submit" value = "<?php echo $cancel_val; ?>" > </center>
 		</form>
 	</body>
 </html>
