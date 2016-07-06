@@ -50,6 +50,18 @@
 			$sql = "UPDATE Game SET Status = 'Success' WHERE GameID = '$game_id';";
 			mysqli_query($db,$sql);
 			$val = $val + 100;
+			
+			if($mode == "Sequence")
+			{
+				$sql = "SELECT SequenceID,GameCount FROM Sequence WHERE GameID = '$game_id';";
+				$result = mysqli_query($db,$sql);
+				$row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+				$seq_id = $row["SequenceID"];
+				$seq_count = $row["GameCount"];
+				
+				$sql = "UPDATE SequenceList SET Score = '$seq_count' WHERE SequenceID = '$seq_id';";
+				mysqli_query($db,$sql);
+			}
 		}
 		else if(($mode == "Counter" || $mode == "Sequence") && $turncount == 10)
 		{
@@ -62,6 +74,17 @@
 			else
 			{
 				$val = $val - 100;
+			}
+			
+			if($mode == "Sequence")
+			{
+				$sql = "SELECT SequenceID FROM Sequence WHERE GameID = '$game_id';";
+				$result = mysqli_query($db,$sql);
+				$row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+				$seq_id = $row["SequenceID"];
+				
+				$sql = "UPDATE SequenceList SET SequenceStatus = 'Finished' WHERE SequenceID = '$seq_id';";
+				mysqli_query($db,$sql);				
 			}
 		}
 		echo("$val");

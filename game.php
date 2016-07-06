@@ -50,8 +50,23 @@
 			$row = mysqli_fetch_array($result,MYSQLI_ASSOC);
 			$seq_id = $row["SequenceID"];
 			
+			$sql = "UPDATE Sequence SET GameStatus = 'Intermediate' WHERE SequenceID = '$seq_id';";
+			mysqli_query($db,$sql);
+			
 			$sql = "UPDATE Sequence SET GameStatus = 'Complete' WHERE GameID = '$game_id';";
 			mysqli_query($db,$sql);
+			
+			$sql = "SELECT SequenceStatus FROM SequenceList WHERE SequenceID = '$seq_id';";
+			$result = mysqli_query($db,$sql);
+			$row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+			$seq_stat = $row["SequenceStatus"];
+			
+			if($seq_stat == "New")
+			{
+				$sql = "UPDATE SequenceList SET SequenceStatus = 'Open' WHERE SequenceID = '$seq_id';";
+				mysqli_query($db,$sql);
+			}
+				
 		}
 		if($status == "Success" || $status == "Failure")
 		{
@@ -145,8 +160,8 @@
 								echo "<td>" . $row["Guess"] . "</td>";
 								if($row["Cows"] < 0)
 								{
-									echo "<td> X <\td>";
-									echo "<td> X <\td>";
+									echo "<td> X </td>";
+									echo "<td> X </td>";
 								}
 								else
 								{

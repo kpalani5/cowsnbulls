@@ -41,6 +41,15 @@
 			{
 				$sql = "INSERT INTO Sequence(GameID,GameCount,GameStatus) VALUES ('$game_id','1','New');";
 				mysqli_query($db,$sql);
+				
+				$sql = "SELECT SequenceID FROM Sequence WHERE GameID = '$game_id';";
+				$result = mysqli_query($db,$sql);
+				$row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+				$seq_id = $row["SequenceID"];
+				
+				$sql = "INSERT INTO SequenceList VALUES ('$seq_id','0','$login_user','New','$letter','$level');";
+				mysqli_query($db,$sql);
+				
 				$start_val = "START SEQUENCE";
 			}
 			else
