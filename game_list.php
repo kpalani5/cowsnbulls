@@ -5,7 +5,7 @@
 	$type = $_GET['type'];
 	if($type == "saved")
 	{
-		$sql = "SELECT GameID,GameTime,Status FROM Game WHERE Username = '$login_user' AND Status = 'Open';";
+		$sql = "SELECT GameID,GameTime,Status FROM Game WHERE Username = '$login_user' AND Status = 'Open' AND Mode in ('Freestyle','Counter');";
 		$val = "CONTINUE GAME";
 	}
 	else

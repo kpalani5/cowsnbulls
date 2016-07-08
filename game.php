@@ -81,7 +81,27 @@
 <html>
 	<script src="https://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
 	<head>
+		<link rel="stylesheet" type="text/css" href="jquery.countdown.css"> 
+		<style type="text/css">
+			body > iframe { display: none; }
+			#timer { width: 240px; height: 45px; }
+		</style>
+		<script type="text/javascript" src="jquery.plugin.js"></script> 
+		<script type="text/javascript" src="jquery.countdown.js"></script>
 		<title>Cows N Bulls</title>
+		<script type = "text/javascript">
+			$(function () {
+				var mode = $("#mode").val();
+				var status = $("#status").val();
+				if(mode == "Timer" || mode == "Sequence")
+				{
+					if(status == "Open")
+					{
+						$('#timer').countdown({until: +300});
+					}
+				}
+			});
+		</script>
 	<script type = "text/javascript">
 		function cowsNbulls() {	
 			$.ajax(
@@ -127,10 +147,14 @@
 	</head>
 	<body>
 		<center> <h1> COWS AND BULLS </h1> </center>
+		<div id = 'timer'> </div>
+		<br>
+		<br>
 		<form method = "post">
 			<input type = "hidden" name = "game_id" id = "game_id" value = "<?php echo $game_id ?>" <?php echo $guess_status_readonly; ?>>
 			<input type = "hidden" name = "turncount" id = "turncount" value = "<?php echo $turncount ?>" >
 			<input type = "hidden" name = "mode" id = "mode" value = "<?php echo $mode ?>" >
+			<input type = "hidden" name = "status" id = "status" value = "<?php echo $status ?>" >
 			<center>
 			<table>
 				<tr>
