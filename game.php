@@ -1,6 +1,6 @@
 <?php
 	include("config.php");
-	
+	include("session.php");
 	if($_SERVER["REQUEST_METHOD"] == "POST")
 	{
 		$game_id = $_POST["game_id"];
@@ -81,27 +81,7 @@
 <html>
 	<script src="https://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
 	<head>
-		<link rel="stylesheet" type="text/css" href="jquery.countdown.css"> 
-		<style type="text/css">
-			body > iframe { display: none; }
-			#timer { width: 240px; height: 45px; }
-		</style>
-		<script type="text/javascript" src="jquery.plugin.js"></script> 
-		<script type="text/javascript" src="jquery.countdown.js"></script>
 		<title>Cows N Bulls</title>
-		<script type = "text/javascript">
-			$(function () {
-				var mode = $("#mode").val();
-				var status = $("#status").val();
-				if(mode == "Timer" || mode == "Sequence")
-				{
-					if(status == "Open")
-					{
-						$('#timer').countdown({until: +300});
-					}
-				}
-			});
-		</script>
 	<script type = "text/javascript">
 		function cowsNbulls() {	
 			$.ajax(

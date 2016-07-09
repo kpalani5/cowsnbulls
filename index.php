@@ -38,7 +38,7 @@
 				<td> <input type = "password" name = "password"> </td>
 			</tr>
 		</table>
-			<input type = "submit" value = "Login">
+			<input type = "submit" value = "LOGIN">
 		</form>
 		</br></br>
 		<a href = "register.php"> New to the game? Click here to register. </a> 
