@@ -21,7 +21,7 @@
 	<head>
 		<title>Cows N Bulls</title>
 	</head>
-	<body>
+	<body bgcolor = "#00FF00">
 		<center>
 		<h1> LIST OF GAMES </h1>
 		<br>
@@ -46,6 +46,11 @@
 					}
 				?>
 		</table>
+		<br>
+		<br>
+		<form action = "home.php" method = "post">
+			<input type = "submit" value = "BACK TO HOMEPAGE" id = "backbutton">
+		</form>
 		</center>
 	</body>
 </html>

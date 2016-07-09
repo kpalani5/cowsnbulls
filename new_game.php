@@ -6,7 +6,7 @@
 	<head>
 		<title>Cows N Bulls</title>
 	</head>
-	<body>
+	<body bgcolor = "#00FF00">
 		<center> <h2> Game Selection </h2> </center>
 		<br>
 		<center>
@@ -49,6 +49,9 @@
 			<br>
 			<input type = "hidden" value = "" name = "seq_id">
 			<input type = "submit" value = "PLAY">
+		</form>
+		<form action = "home.php" method = "post">
+			<input type = "submit" value = "BACK TO HOMEPAGE" id = "backbutton">
 		</form>
 		</center>
 	</body>

@@ -38,7 +38,7 @@
 	<head>
 		<title>Cows N Bulls</title>
 	</head>
-	<body>
+	<body bgcolor = "#00FF00">
 		<center>
 		<center> <h1> Registration </h1> </center>
 		<form action = "register.php" method = "post">
@@ -82,8 +82,11 @@
 					<td> <input type = "password" name = "confirm" id = "confirm" required> </td>
 				</tr>
 			</table>
-			<input type = "submit" value = "Register">
+			<input type = "submit" value = "REGISTER">
 		</form>
+		<br>
+		<br>
+			<a href = "index.php"> Back to Login Page </a>
 		</center>
 	</body>
 </html>

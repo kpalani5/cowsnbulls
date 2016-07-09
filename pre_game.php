@@ -75,13 +75,17 @@
 			}
 		}
 	}	
+	else
+	{
+		header("Location: home.php");
+	}
 ?>
 
 <html>
 	<head>
 		<title>Cows N Bulls</title>
 	</head>
-	<body>
+	<body bgcolor = "#00FF00">
 		<center> <h2> Get Ready to Start the Game </h2> </center>
 		<br>
 		<form action = "game.php" method = "post">

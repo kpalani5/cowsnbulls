@@ -27,6 +27,7 @@
 		$save_status_disable = "enabled";
 		$guess_status_disable = "enabled";
 		$guess_status_readonly = "";
+		$back_button_enable = "disabled";
 		if($mode == "Timer" || $mode == "Sequence")
 		{
 			$save_status_disable = "disabled";
@@ -73,7 +74,12 @@
 			$save_status_disable = "disabled";
 			$guess_status_disable = "disabled";
 			$guess_status_readonly = "readonly";
+			$back_button_enable = "enabled";
 		}
+	}
+	else
+	{
+		header("Location: home.php");
 	}
 
 ?>
@@ -105,11 +111,13 @@
 					var turnc = $('#turncount').get(0).value - 1;
 					$("#game_table").append("<tr> <td>" + turnc + "</td> <td>" + guessval + "</td> <td>" + rem + "</td> <td>" + quo + "</td> </tr>");
 					$("#guess").val('');
+					$("#backbutton").prop("disabled",true);
 					if(data >= 100 || data < -100)
 					{
 						$("#guess").prop("readonly",true);
 						$("#gbutton").prop("disabled",true);
 						$("#sbutton").prop("disabled",true);
+						$("#backbutton").prop("disabled",false);
 					}
 					var mode = $("#mode").val();
 					if(mode == "Sequence" && data >= 100)
@@ -125,7 +133,7 @@
 		}
 	</script>
 	</head>
-	<body>
+	<body bgcolor = "cyan">
 		<center> <h1> COWS AND BULLS </h1> </center>
 		<div id = 'timer'> </div>
 		<br>
@@ -196,6 +204,9 @@
 			<input type = "hidden" name = "level" id = "level" value = "<?php echo $level ?>" >
 			<input type = "hidden" name = "seq_id" value = <?php echo $seq_id ?>>
 			<input type = "submit" value = "CONTINUE SEQUENCE" id = "scbutton" disabled> 
+		</form>
+		<form action = "home.php" method = "post">
+			<input type = "submit" value = "BACK TO HOMEPAGE" id = "backbutton" <?php echo $back_button_enable; ?>>
 		</form>
 		</center>
 	</body>

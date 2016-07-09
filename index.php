@@ -21,7 +21,7 @@
 	<head>
 		<title>Cows N Bulls</title>
 	</head>
-	<body>
+	<body bgcolor = "#00FF00">
 		<center>
 		<h1>
 			<?php echo("COWS AND BULLS"); ?>
