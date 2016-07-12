@@ -131,6 +131,17 @@
 			);
 			$("#turncount").get(0).value++; 
 		}
+		
+		function sub(e)
+		{
+			 e = e || window.event;
+			if (e.keyCode == 13)
+			{
+				document.getElementById('gbutton').click();
+				return false;
+			}
+			return true;	
+		}
 	</script>
 	</head>
 	<body bgcolor = "cyan">
@@ -146,7 +157,7 @@
 			<center>
 			<table>
 				<tr>
-				<td> <input type = "text" name = "guess" id = "guess" autocomplete = "off" required> </td>
+				<td> <input type = "text" name = "guess" id = "guess" autocomplete = "off" required onkeypress = "return sub(event);" </td>
 				<td> <input type = "button" value = "GUESS" id = "gbutton" onClick = "cowsNbulls();" <?php echo $guess_status_disable;?>> </td>
 				</tr>
 			</table>
