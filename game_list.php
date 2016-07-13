@@ -40,6 +40,7 @@
 						echo "<td>" . $row["GameTime"] . "</td>";
 						echo "<td>" . $row["Status"] . "</td>";
 						echo "<input type = 'hidden' id = 'game_id' name = 'game_id' value = " . $row["GameID"] . ">";
+						echo "<input type = 'hidden' name = 'time_left' id = 'time_left' value = ''>";
 						echo "<td> <input type = 'submit' value = " . $val . "> </td>";
 						echo "</form>";
 						echo "</tr>";

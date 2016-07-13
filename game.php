@@ -134,7 +134,7 @@
 		
 		function sub(e)
 		{
-			 e = e || window.event;
+			e = e || window.event;
 			if (e.keyCode == 13)
 			{
 				document.getElementById('gbutton').click();
@@ -142,11 +142,25 @@
 			}
 			return true;	
 		}
+		
+		function game_timer()
+		{
+			var mode = $("#mode").val();
+			var status = $("#status").val();
+			if((status == "New" || status == "Open") && (mode == "Timer" || mode == "Sequence"))
+			{
+				var t1 = $("#time_left").val(); 
+				var t2 = new Date();
+				t = Math.floor((t1*1000 - t2.getTime())/1000);
+				document.getElementById('timer').innerHTML = t;
+				
+			}
+		}
 	</script>
 	</head>
-	<body bgcolor = "cyan">
+	<body bgcolor = "cyan" onload = "setInterval(game_timer,1000);" >
 		<center> <h1> COWS AND BULLS </h1> </center>
-		<div id = 'timer'> </div>
+		<div id = 'timer' border = "2"> </div>
 		<br>
 		<br>
 		<form method = "post">
@@ -154,6 +168,7 @@
 			<input type = "hidden" name = "turncount" id = "turncount" value = "<?php echo $turncount ?>" >
 			<input type = "hidden" name = "mode" id = "mode" value = "<?php echo $mode ?>" >
 			<input type = "hidden" name = "status" id = "status" value = "<?php echo $status ?>" >
+			<input type = "hidden" name = "time_left" id = "time_left" value = "<?php echo $_POST["time_left"] ?>" >
 			<center>
 			<table>
 				<tr>
