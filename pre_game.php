@@ -91,7 +91,7 @@
 		<form action = "game.php" method = "post">
 			<input type = "hidden" name = "mode" value = "<?php echo $mode ?>" >
 			<input type = "hidden" name = "game_id" value = "<?php echo $game_id ?>" >
-			<input type = "hidden" name = "time_left" value = "<?php echo (time()+304);?>" >
+			<input type = "hidden" name = "time_left" value = "<?php echo (time()+24);?>" >
 			<center> <input type = "submit" value = "<?php echo $start_val; ?>" > </center>
 		</form>
 		<br>

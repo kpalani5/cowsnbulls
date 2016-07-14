@@ -28,9 +28,17 @@
 		$guess_status_disable = "enabled";
 		$guess_status_readonly = "";
 		$back_button_enable = "disabled";
+		if(!isset($_SESSION['time_left']))
+		{
+			$_SESSION['time_left'] = 0;
+		}
 		if($mode == "Timer" || $mode == "Sequence")
 		{
 			$save_status_disable = "disabled";
+			if($status == "New")
+			{
+				$_SESSION["time_left"] = $_SERVER["REQUEST_TIME"];
+			}
 		}
 		$seq_id = "";
 		$level = "";
@@ -89,6 +97,8 @@
 	<head>
 		<title>Cows N Bulls</title>
 	<script type = "text/javascript">
+		myTimer = '';
+		
 		function cowsNbulls() {	
 			$.ajax(
 			{
@@ -124,6 +134,18 @@
 					{
 							$("#ssbutton").prop("disabled",false);
 							$("#scbutton").prop("disabled",false);
+							document.getElementById('timer').innerHTML = "-";
+							clearInterval(myTimer);
+					}
+					if(mode == "Sequence" && data < -100)
+					{
+							document.getElementById('timer').innerHTML = "-";
+							clearInterval(myTimer);
+					}
+					if(mode == "Timer" && data >= 100)
+					{
+							document.getElementById('timer').innerHTML = "-";
+							clearInterval(myTimer);
 					}
 				},
 				error:function (){}
@@ -149,16 +171,38 @@
 			var status = $("#status").val();
 			if((status == "New" || status == "Open") && (mode == "Timer" || mode == "Sequence"))
 			{
-				var t1 = $("#time_left").val(); 
+				
+				var t1 = $("#time_left").val();
 				var t2 = new Date();
 				t = Math.floor((t1*1000 - t2.getTime())/1000);
-				document.getElementById('timer').innerHTML = t;
-				
+				if(t > 0)
+				{
+					document.getElementById('timer').innerHTML = t;
+				}
+				else
+				{
+					document.getElementById('timer').innerHTML = 0;
+					$("#guess").prop("readonly",true);
+					$("#gbutton").prop("disabled",true);
+					$("#backbutton").prop("disabled",false);
+					$.ajax(
+					{
+						url: "timed_game.php",
+						data: "game_id="+$("#game_id").val() + "&mode=" + mode,
+						type: "POST",
+						success:function(data){}
+					});
+				}
 			}
+		}
+		
+		function timer_start()
+		{
+			myTimer = setInterval(game_timer,1000);
 		}
 	</script>
 	</head>
-	<body bgcolor = "cyan" onload = "setInterval(game_timer,1000);" >
+	<body bgcolor = "cyan" onload = "timer_start();" >
 		<center> <h1> COWS AND BULLS </h1> </center>
 		<div id = 'timer' border = "2"> </div>
 		<br>
@@ -168,7 +212,7 @@
 			<input type = "hidden" name = "turncount" id = "turncount" value = "<?php echo $turncount ?>" >
 			<input type = "hidden" name = "mode" id = "mode" value = "<?php echo $mode ?>" >
 			<input type = "hidden" name = "status" id = "status" value = "<?php echo $status ?>" >
-			<input type = "hidden" name = "time_left" id = "time_left" value = "<?php echo $_POST["time_left"] ?>" >
+			<input type = "hidden" name = "time_left" id = "time_left" value = "<?php echo $_SESSION["time_left"]+22 ?>" >
 			<center>
 			<table>
 				<tr>
