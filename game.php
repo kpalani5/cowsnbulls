@@ -37,7 +37,7 @@
 			$save_status_disable = "disabled";
 			if($status == "New")
 			{
-				$_SESSION["time_left"] = $_SERVER["REQUEST_TIME"];
+				$_SESSION["time_left"] = time();
 			}
 		}
 		$seq_id = "";
@@ -201,10 +201,20 @@
 			myTimer = setInterval(game_timer,1000);
 		}
 	</script>
+	<style>
+		#timer {
+			border-size:2px;
+			border-style:solid;
+			border-color:red;
+			max-width:100px;
+			text-align:center;
+			font-weight:bold;
+		};
+	</style>
 	</head>
 	<body bgcolor = "cyan" onload = "timer_start();" >
 		<center> <h1> COWS AND BULLS </h1> </center>
-		<div id = 'timer' border = "2"> </div>
+		<div id = 'timer'> </div>
 		<br>
 		<br>
 		<form method = "post">
@@ -212,7 +222,7 @@
 			<input type = "hidden" name = "turncount" id = "turncount" value = "<?php echo $turncount ?>" >
 			<input type = "hidden" name = "mode" id = "mode" value = "<?php echo $mode ?>" >
 			<input type = "hidden" name = "status" id = "status" value = "<?php echo $status ?>" >
-			<input type = "hidden" name = "time_left" id = "time_left" value = "<?php echo $_SESSION["time_left"]+22 ?>" >
+			<input type = "hidden" name = "time_left" id = "time_left" value = "<?php echo $_SESSION["time_left"]+301 ?>" >
 			<center>
 			<table>
 				<tr>
