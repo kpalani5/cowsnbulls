@@ -130,14 +130,14 @@
 						$("#backbutton").prop("disabled",false);
 					}
 					var mode = $("#mode").val();
-					if(mode == "Sequence" && data >= 100)
+					if(mode == "Sequence" && data >= 100 && data <= 1000)
 					{
 							$("#ssbutton").prop("disabled",false);
 							$("#scbutton").prop("disabled",false);
 							document.getElementById('timer').innerHTML = "-";
 							clearInterval(myTimer);
 					}
-					if(mode == "Sequence" && data < -100)
+					if(mode == "Sequence" && (data < -100 || data >= 1000))
 					{
 							$("#ssbutton").prop("disabled",true);
 							$("#scbutton").prop("disabled",true);

@@ -69,7 +69,7 @@
 			mysqli_query($db,$sql);
 			if($val >= 0)
 			{
-				$val = $val + 100;
+				$val = $val + 1000;
 			}
 			else
 			{
