@@ -139,6 +139,8 @@
 					}
 					if(mode == "Sequence" && data < -100)
 					{
+							$("#ssbutton").prop("disabled",true);
+							$("#scbutton").prop("disabled",true);
 							document.getElementById('timer').innerHTML = "-";
 							clearInterval(myTimer);
 					}
@@ -184,6 +186,8 @@
 					document.getElementById('timer').innerHTML = 0;
 					$("#guess").prop("readonly",true);
 					$("#gbutton").prop("disabled",true);
+					$("#ssbutton").prop("disabled",true);
+					$("#scbutton").prop("disabled",true);
 					$("#backbutton").prop("disabled",false);
 					$.ajax(
 					{
