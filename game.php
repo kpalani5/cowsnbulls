@@ -8,9 +8,9 @@
 		$result = mysqli_query($db,$sql);
 		$row = mysqli_fetch_array($result,MYSQLI_ASSOC);
 		$status = $row["Status"];
-		$mode = $row["Mode"];		
+		$mode = $row["Mode"];
 		$gword = $row["Word"];
-		
+
 		if($status == "New")
 		{
 			$sql = "UPDATE Game SET Status = 'Open' WHERE GameID = '$game_id';";
@@ -53,29 +53,29 @@
 			{
 				$letter = "Five";
 			}
-		
+
 			$sql = "SELECT SequenceID FROM Sequence WHERE GameID = '$game_id';";
 			$result = mysqli_query($db,$sql);
 			$row = mysqli_fetch_array($result,MYSQLI_ASSOC);
 			$seq_id = $row["SequenceID"];
-			
+
 			$sql = "UPDATE Sequence SET GameStatus = 'Intermediate' WHERE SequenceID = '$seq_id';";
 			mysqli_query($db,$sql);
-			
+
 			$sql = "UPDATE Sequence SET GameStatus = 'Complete' WHERE GameID = '$game_id';";
 			mysqli_query($db,$sql);
-			
+
 			$sql = "SELECT SequenceStatus FROM SequenceList WHERE SequenceID = '$seq_id';";
 			$result = mysqli_query($db,$sql);
 			$row = mysqli_fetch_array($result,MYSQLI_ASSOC);
 			$seq_stat = $row["SequenceStatus"];
-			
+
 			if($seq_stat == "New")
 			{
 				$sql = "UPDATE SequenceList SET SequenceStatus = 'Open' WHERE SequenceID = '$seq_id';";
 				mysqli_query($db,$sql);
 			}
-				
+
 		}
 		if($status == "Success" || $status == "Failure")
 		{
@@ -95,11 +95,16 @@
 <html>
 	<script src="https://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
 	<head>
+		<meta charset="utf-8">
+  	<meta name="viewport" content="width=device-width, initial-scale=1">
+  	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 		<title>Cows N Bulls</title>
 	<script type = "text/javascript">
 		myTimer = '';
-		
-		function cowsNbulls() {	
+
+		function cowsNbulls() {
 			$.ajax(
 			{
 				url: "cnb.php",
@@ -109,7 +114,7 @@
 					var quo = "X";
 					var rem = "X";
 					if(data >= 0)
-					{						
+					{
 						var quo = Math.floor(data/10);
 						var rem = data % 10;
 					}
@@ -153,9 +158,9 @@
 				error:function (){}
 			}
 			);
-			$("#turncount").get(0).value++; 
+			$("#turncount").get(0).value++;
 		}
-		
+
 		function sub(e)
 		{
 			e = e || window.event;
@@ -164,16 +169,16 @@
 				document.getElementById('gbutton').click();
 				return false;
 			}
-			return true;	
+			return true;
 		}
-		
+
 		function game_timer()
 		{
 			var mode = $("#mode").val();
 			var status = $("#status").val();
 			if((status == "New" || status == "Open") && (mode == "Timer" || mode == "Sequence"))
 			{
-				
+
 				var t1 = $("#time_left").val();
 				var t2 = new Date();
 				t = Math.floor((t1*1000 - t2.getTime())/1000);
@@ -199,7 +204,7 @@
 				}
 			}
 		}
-		
+
 		function timer_start()
 		{
 			myTimer = setInterval(game_timer,1000);
@@ -227,17 +232,12 @@
 			<input type = "hidden" name = "mode" id = "mode" value = "<?php echo $mode ?>" >
 			<input type = "hidden" name = "status" id = "status" value = "<?php echo $status ?>" >
 			<input type = "hidden" name = "time_left" id = "time_left" value = "<?php echo $_SESSION["time_left"]+301 ?>" >
-			<center>
-			<table>
-				<tr>
-				<td> <input type = "text" name = "guess" id = "guess" autocomplete = "off" required onkeypress = "return sub(event);" </td>
-				<td> <input type = "button" value = "GUESS" id = "gbutton" onClick = "cowsNbulls();" <?php echo $guess_status_disable;?>> </td>
-				</tr>
-			</table>
-			</center>
-		</form>
+
 		<center>
-			<table border = "2" id = "game_table">
+			<div class = "row">
+				<div class = "col-sm-2"> </div>
+				<div class = "col-sm-8">
+			<table border = "2" id = "game_table" class = "table table-striped table-condensed">
 				<th> TURN </th>
 				<th> GUESS </th>
 				<th> COWS </th>
@@ -269,28 +269,40 @@
 						}
 					}
 				?>
-				<tr> 	
+				<tr>
 				</tr>
 			</table>
+		</div>
+		<div class="col-sm-2"> </div>
 		</center>
 		<br>
 		<center>
+		<table>
+			<tr>
+			<td> <input type = "text" name = "guess" id = "guess" autocomplete = "off" required onkeypress = "return sub(event);" </td>
+			<td> <input type = "button" class="btn btn-danger" value = "GUESS" id = "gbutton" onClick = "cowsNbulls();" <?php echo $guess_status_disable;?>> </td>
+			</tr>
+		</table>
+		</center>
+	</form>
+	<br>
+		<center>
 		<form action = "save_game.php" method = "post">
-			<input type = "submit" value = "SAVE GAME" id = "sbutton" <?php echo $save_status_disable; ?>> 
+			<input type = "submit" class="btn btn-info" value = "SAVE GAME" id = "sbutton" <?php echo $save_status_disable; ?>>
 		</form>
 		<form action = "save_game.php" method = "post">
 			<input type = "hidden" name = "game_id" value = <?php echo $game_id ?>>
-			<input type = "submit" value = "SAVE SEQUENCE" id = "ssbutton" disabled> 
+			<input type = "submit" class="btn btn-info" value = "SAVE SEQUENCE" id = "ssbutton" disabled>
 		</form>
 		<form action = "pre_game.php" method = "post">
 			<input type = "hidden" name = "mode" id = "mode" value = "<?php echo $mode ?>" >
 			<input type = "hidden" name = "letter" id = "letter" value = "<?php echo $letter ?>" >
 			<input type = "hidden" name = "level" id = "level" value = "<?php echo $level ?>" >
 			<input type = "hidden" name = "seq_id" value = <?php echo $seq_id ?>>
-			<input type = "submit" value = "CONTINUE SEQUENCE" id = "scbutton" disabled> 
+			<input type = "submit" class="btn btn-info" value = "CONTINUE SEQUENCE" id = "scbutton" disabled>
 		</form>
 		<form action = "home.php" method = "post">
-			<input type = "submit" value = "BACK TO HOMEPAGE" id = "backbutton" <?php echo $back_button_enable; ?>>
+			<input type = "submit" class="btn btn-info" value = "BACK TO HOMEPAGE" id = "backbutton" <?php echo $back_button_enable; ?>>
 		</form>
 		</center>
 	</body>
