@@ -211,12 +211,14 @@
 		}
 	</script>
 	<style>
+
 		#timer {
 			border-size:2px;
 			border-style:solid;
 			border-color:red;
 			max-width:100px;
 			text-align:center;
+			font-family: "Digital", Courier, monospace;
 			font-weight:bold;
 		};
 	</style>

@@ -8,7 +8,7 @@
 		$confirm = $_POST["confirm"];
 		$user_count = 0;
 		$email_count = 0;
-		
+
 		if (isset($_POST['username']))
 		{
 			$sql = "SELECT count(*) FROM user WHERE username='$username';";
@@ -18,9 +18,9 @@
 			$result2 = mysqli_query($db,$sql2);
 			$row2 = mysqli_fetch_array($result2,MYSQLI_ASSOC);
 			$user_count = $row["count(*)"];
-			$email_count = $row2["count(*)"];	
+			$email_count = $row2["count(*)"];
 		}
-		
+
 		if($user_count == 0 && $email_count == 0 && $password === $confirm)
 		{
 			$cost = 10;
@@ -30,23 +30,62 @@
 			$sql = "INSERT INTO login VALUES ('$username','$hash','user');";
 			$sql2 = "INSERT INTO user VALUES ('$username','$email',now());";
 			mysqli_query($db,$sql2);
-			mysqli_query($db,$sql);		 
+			mysqli_query($db,$sql);
 		}
 	}
 ?>
 <html>
-	<head>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<style>
+body
+{
+	background: url('backg.jpg');
+}
+.jumbotron
+{
+	background-color:black;
+	text-align:center;
+}
+.headtext
+{
+	font-style: oblique;
+	font-weight: bold;
+	font-family: "Comic Sans MS", cursive, sans-serif;
+	color: gold;
+}
+.table
+{
+	border-color: red;
+}
+.table_txt
+{
+	color: red;
+	font-style: oblique;
+	font-weight: bold;
+	font-family: "Comic Sans MS", cursive, sans-serif;
+}
+</style>
 		<title>Cows N Bulls</title>
 	</head>
-	<body bgcolor = "#00FF00">
+	<body>
 		<center>
-		<center> <h1> Registration </h1> </center>
+			<div class = "jumbotron">
+		<center> <h2 class = "headtext"> Registration </h2> </center>
+	</div>
+		<div class = "row">
+			<div class = "col-sm-4"></div>
+			<div class = "col-sm-4">
 		<form action = "register.php" method = "post">
-			<table>
-			    <?php 
+			<table class = "table table-bordered">
+			    <?php
 				if($_SERVER["REQUEST_METHOD"] == "POST")
 				{
-					if($user_count > 0) 
+					if($user_count > 0)
 					{
 						echo "<div> Username Not Available.</div>";
 					}
@@ -65,28 +104,31 @@
 				}
 				?>
 				<tr>
-					<td> Username: </td>
+					<td class = "table_txt"> Username: </td>
 					<td> <input type = "text" name = "username" required> </td>
 					<td> <div id = "user_status"> </div> </td>
 				</tr>
 				<tr>
-					<td> Email ID: </td>
+					<td class = "table_txt"> Email ID: </td>
 					<td> <input type = "email" name = "email"> </td>
 				</tr>
 				<tr>
-					<td> Password: </td>
+					<td class = "table_txt"> Password: </td>
 					<td> <input type = "password" name = "password" id = "password" required> </td>
 				</tr>
 				<tr>
-					<td> Confirm Password: </td>
+					<td class = "table_txt"> Confirm Password: </td>
 					<td> <input type = "password" name = "confirm" id = "confirm" required> </td>
 				</tr>
 			</table>
-			<input type = "submit" value = "REGISTER">
+			<input type = "submit" value = "REGISTER" class = "btn btn-success btn-lg">
 		</form>
+	</div>
+	<div class = "col-sm-4"></div>
+</div>
 		<br>
 		<br>
-			<a href = "index.php"> Back to Login Page </a>
+			<a href = "index.php" class = "btn btn-success btn-lg"> Back to Login Page </a>
 		</center>
 	</body>
 </html>
