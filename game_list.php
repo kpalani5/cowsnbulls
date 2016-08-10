@@ -52,19 +52,60 @@ body
 	font-weight: bold;
 	font-family: "Comic Sans MS", cursive, sans-serif;
 }
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: auto;
+		height: 100%;
+    background-color: black;
+
+}
+
+li a {
+    display: block;
+    color: gold;
+		font-weight: bolder;
+    padding: 8px 16px;
+    text-decoration: none;
+		font-family: "Comic Sans MS", cursive, sans-serif;
+}
+
+li a:hover {
+    background-color: white;
+    color: red;
+}
+
 </style>
 		<title>Cows N Bulls</title>
 	</head>
 	<body>
-		<center>
+
 		<div class = "jumbotron">
 		<h2 class = "headtext"> LIST OF GAMES </h2>
 	</div>
-		<br>
-		<br>
 		<div class = "row">
-			<div class = "col-sm-4"> </div>
+			<div class = "col-sm-2">
+
+				<ul>
+		  <li><a href="home.php">Home</a></li>
+		  <li><a href="#">Forum</a></li>
+		  <li><a href="#">Statistics</a></li>
+			<li><a href="#">Game Manual</a></li>
+		  <li><a href="#">Leaderboard</a></li>
+			<li><a href="#">Account Settings</a></li>
+			<li><a href="#">Contact</a></li>
+			<li><a href="#">About</a></li>
+			<li><a href="logout.php">Logout</a></li>
+		</ul>
+			</div>
+
+			<div class = "col-sm-2"> </div>
 			<div class = "col-sm-4">
+				<br>
+				<br>
+				<center>
 		<table class = "table table-bordered">
 			<th> Game ID </th>
 			<th> Game Start Time </th>
@@ -86,14 +127,12 @@ body
 					}
 				?>
 		</table>
+		</center>
 	</div>
 	<div class = "col-sm-4"> </div>
 </div>
 		<br>
 		<br>
-		<form action = "home.php" method = "post">
-			<input type = "submit" class = "btn btn-lg btn-success" value = "BACK TO HOMEPAGE" id = "backbutton">
-		</form>
-		</center>
+
 	</body>
 </html>

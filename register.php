@@ -87,19 +87,19 @@ body
 				{
 					if($user_count > 0)
 					{
-						echo "<div> Username Not Available.</div>";
+						echo "<div> USERNAME NOT AVAILABLE</div>";
 					}
 					if($email_count > 0)
 					{
-						echo "<div> User with this email is already registered. </div>";
+						echo "<div> USER WITH THIS EMAIL IS ALREADY REGISTERED </div>";
 					}
 					if($password !== $confirm)
 					{
-						echo "<div> Passwords do not match.</div>";
+						echo "<div> PASSWORDS DO NOT MATCH </div>";
 					}
 					if($user_count == 0 && $email_count == 0 && $password === $confirm)
 					{
-						echo "<div> Successfully Registered!</div>";
+						echo "<div> SUCCESSFULLY REGISTERED </div>";
 					}
 				}
 				?>
