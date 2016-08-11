@@ -55,35 +55,43 @@
 	</head>
 	<body>
 		<div class = "jumbotron">
-		<center> <h2 class = "headtext"> Welcome <?php echo $login_session; ?> </h2> </center>
+		<center> <h2 class = "headtext"> ABOUT </h2> </center>
 	</div>
-	<div class = "row">
-	<div class = "col-sm-2">
-
-		<ul>
-	<li><a href="home.php">Home</a></li>
-	<li><a href="#">Forum</a></li>
-	<li><a href="#">Statistics</a></li>
-	<li><a href="#">Game Manual</a></li>
-	<li><a href="#">Leaderboard</a></li>
-	<li><a href="account_settings.php">Account Settings</a></li>
-	<li><a href="contact.php">Contact</a></li>
-	<li><a href="about.php">About</a></li>
-	<li><a href="logout.php">Logout</a></li>
-</ul>
-	</div>
-	<div class = "col-sm-2"> </div>
-	<div class = "col-sm-4">
+  <div class = "row">
+  <div class = "col-sm-2">
+    <ul>
+  <li><a href="home.php">Home</a></li>
+  <li><a href="#">Forum</a></li>
+  <li><a href="#">Statistics</a></li>
+  <li><a href="#">Game Manual</a></li>
+  <li><a href="#">Leaderboard</a></li>
+  <li><a href="account_settings.php">Account Settings</a></li>
+  <li><a href="contact.php">Contact</a></li>
+  <li><a href="about.php">About</a></li>
+  <li><a href="logout.php">Logout</a></li>
+  </ul>
+  </div>
+  <div class = "col-sm-2"> </div>
+  <div class = "col-sm-4">
+    <br>
+    <br>
+    <center>
+      <h3>
+		Cows and Bulls is an intellectual word based game restricted to English words.
 		<br>
-		<center>
-			<h3> <a class="btn btn-success btn-lg"  href = "new_game.php"> NEW GAME </a> </h3>
-		 <h3> <a class="btn btn-success btn-lg" href = "game_list.php?type=saved"> CONTINUE SAVED GAME </a> </h3>
-			<h3> <a class="btn btn-success btn-lg" href = "sequence_list.php?type=saved"> CONTINUE SAVED SEQUENCE </a> </h3>
-		 <h3> <a class="btn btn-success btn-lg" href = "game_list.php?type=finished"> RECENTLY FINISHED GAMES </a> </h3>
-			<h3> <a class="btn btn-success btn-lg" href = "sequence_list.php?type=finished"> RECENTLY FINISHED SEQUENCES </a> </h3>
-		</center>
-	</div>
-	<div class = "col-sm-4"> </div>
+		<br>
+    The website and game have been developed by Karthik Perumal Palaniappan.
+		<br>
+		<br>
+		DISCLAIMER: The game is a commonly existing word game which does not intend to harm any person or groups.
+		Any such instance is purely coincidental.
+		<br>
+		<br>
+		&copy; Karthik Perumal Palaniappan 2016
+  </h3>
+  </center>
+  </div>
+<div class = "col-sm-4"> </div>
 </div>
-	</body>
+</body>
 </html>
