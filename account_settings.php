@@ -1,5 +1,31 @@
 <?php
+	include("config.php");
 	include("session.php");
+	if($_SERVER["REQUEST_METHOD"] == "POST")
+	{
+		$username = $_SESSION['login_user'];
+		$old_password = $_POST["old_password"];
+		$new_password = $_POST["new_password"];
+		$confirm_password = $_POST["confirm_password"];
+		$pass_count = 0;
+		$sql = "SELECT * FROM login WHERE Username = '$username';";
+		$result = mysqli_query($db,$sql);
+		$row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+		$pass = $row["Password"];
+		if(hash_equals($pass,crypt($old_password,$pass)))
+		{
+			$pass_count = 1;
+		}
+		if($pass_count == 1 && $new_password === $confirm_password)
+		{
+			$cost = 10;
+			$salt = strtr(base64_encode(mcrypt_create_iv(16,MCRYPT_DEV_URANDOM)),'+','.');
+			$salt = sprintf("$2a$%02d$",$cost).$salt;
+			$hash = crypt($new_password,$salt);
+			$sql = "UPDATE login SET Password = '$hash' WHERE Username = '$username';";
+			mysqli_query($db,$sql);
+		}
+	}
 ?>
 <html>
 	<head>
@@ -64,6 +90,23 @@
     <br>
     <center>
       <table class = "table table-bordered">
+				<?php
+			if($_SERVER["REQUEST_METHOD"] == "POST")
+			{
+				if($pass_count != 1)
+				{
+					echo "<div> INVALID OLD PASSWORD </div>";
+				}
+				if($new_password !== $confirm_password)
+				{
+					echo "<div> PASSWORDS DO NOT MATCH </div>";
+				}
+				if($pass_count == 1 && $new_password === $confirm_password)
+				{
+					echo "<div> PASSWORD SUCCESSFULLY CHANGED </div>";
+				}
+			}
+			?>
 				<tr>
 				<td class = "table_txt"> OLD PASSWORD: </td>
 				<td> <input type = "password" name = "old_password" id = "old_password"> </td>
@@ -89,7 +132,7 @@
 <br>
 <form action = "home.php" method = "post">
 	<center>
-		<input type = "submit" value = "CANCEL" class = "btn btn-lg btn-success">
+		<input type = "submit" value = "BACK TO HOMEPAGE" class = "btn btn-lg btn-success">
 	</center>
 </form>
 </body>
