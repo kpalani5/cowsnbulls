@@ -89,15 +89,14 @@ li a:hover {
 			<div class = "col-sm-2">
 
 				<ul>
-		  <li><a href="home.php">Home</a></li>
-		  <li><a href="#">Forum</a></li>
-		  <li><a href="#">Statistics</a></li>
-			<li><a href="#">Game Manual</a></li>
-		  <li><a href="#">Leaderboard</a></li>
-			<li><a href="#">Account Settings</a></li>
-			<li><a href="#">Contact</a></li>
-			<li><a href="#">About</a></li>
-			<li><a href="logout.php">Logout</a></li>
+					<li><a href="home.php">Home</a></li>
+					<li><a href="stats.php">Statistics</a></li>
+					<li><a href="manual.php">Game Manual</a></li>
+					<li><a href="leaderboard.php">Leaderboard</a></li>
+					<li><a href="account_settings.php">Account Settings</a></li>
+					<li><a href="contact.php">Contact</a></li>
+					<li><a href="about.php">About</a></li>
+					<li><a href="logout.php">Logout</a></li>
 		</ul>
 			</div>
 
